@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Questões</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card card">
+      <div class="section-title">
+        <span class="icon">✓</span>
+        <div>
+          <h2 id="authTitle">Entrar no contador</h2>
+          <p id="authHint">Use o mesmo login em celular, tablet e PC.</p>
+        </div>
+      </div>
+      <form id="authForm">
+        <input type="hidden" id="authMode" value="login">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" autocomplete="email" required placeholder="seu@email.com">
+        <label for="password">Senha</label>
+        <input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Mínimo de 6 caracteres">
+        <button class="submit" id="authSubmit" type="submit">Entrar</button>
+        <button class="secondary full" id="toggleAuth" type="button">Ainda não tenho conta</button>
+        <div id="authMessage" class="message"></div>
+      </form>
+    </div>
+  </section>
+
+  <div id="app" class="hidden">
+  <header class="topbar">
+    <div>
+      <h1>Contador de Questões</h1>
+      <p>Registre seu estudo e acompanhe seu progresso.</p>
+    </div>
+    <div class="top-actions"><div class="total-pill"><span id="totalQuestoes">0</span> questões feitas</div><div class="account"><span id="userEmail"></span><button id="logoutBtn" class="secondary">Sair</button></div></div>
+  </header>
+
+  <main class="layout">
+    <aside class="card form-card">
+      <div class="section-title">
+        <span class="icon">＋</span>
+        <div>
+          <h2>Adicionar questões</h2>
+          <p>Você pode lançar várias de uma vez.</p>
+        </div>
+      </div>
+
+      <form id="questaoForm">
+        <label>Área do conhecimento</label>
+        <div class="areas">
+          <button type="button" class="area-btn active" data-area="Matemática">Matemática</button>
+          <button type="button" class="area-btn" data-area="Natureza">Natureza</button>
+          <button type="button" class="area-btn" data-area="Humanas">Humanas</button>
+          <button type="button" class="area-btn" data-area="Linguagens">Linguagens</button>
+        </div>
+
+        <input type="hidden" id="area" value="Matemática">
+
+        <label for="quantidade">Número de questões</label>
+        <div class="quantity-row">
+          <button type="button" id="minus">−</button>
+          <input id="quantidade" type="number" min="1" value="10" required>
+          <button type="button" id="plus">+</button>
+        </div>
+        <div class="quick">
+          <button type="button" data-qtd="5">5</button>
+          <button type="button" data-qtd="10">10</button>
+          <button type="button" data-qtd="15">15</button>
+          <button type="button" data-qtd="20">20</button>
+          <button type="button" data-qtd="30">30</button>
+        </div>
+
+        <label for="descricao">Onde foram feitas?</label>
+        <textarea id="descricao" rows="3" placeholder="Ex.: Lista de exercícios — FME 5, capítulo 3" required></textarea>
+
+        <label for="materia">Matéria específica <span>(opcional)</span></label>
+        <select id="materia">
+          <option value="">Questões gerais da área</option>
+          <option>Língua Portuguesa</option>
+          <option>Inglês</option>
+          <option>Matemática</option>
+          <option>Física</option>
+          <option>Química</option>
+          <option>Biologia</option>
+          <option>História</option>
+          <option>Filosofia</option>
+          <option>Sociologia</option>
+          <option>Geografia</option>
+          <option>Literatura</option>
+          <option>Artes</option>
+          <option>Educação Física</option>
+          <option>Outra</option>
+        </select>
+
+        <button class="submit" type="submit">Adicionar ao contador</button>
+        <div id="message" class="message"></div>
+      </form>
+    </aside>
+
+    <section class="dashboard">
+      <div class="dashboard-heading">
+        <div>
+          <h2>Seu progresso</h2>
+          <p>Questões acumuladas por área do conhecimento.</p>
+        </div>
+        <button id="historyBtn" class="secondary">Ver lançamentos</button>
+      </div>
+
+      <div id="areasGrid" class="areas-grid"></div>
+
+      <div id="history" class="history card hidden">
+        <div class="history-head">
+          <h3>Últimos lançamentos</h3>
+          <button id="closeHistory" class="close">×</button>
+        </div>
+        <div id="historyList"></div>
+      </div>
+    </section>
+  </main>
+  </div>
+
+  <template id="areaTemplate">
+    <article class="area-card card">
+      <div class="area-top">
+        <div class="area-badge"></div>
+        <div>
+          <h3 class="area-name"></h3>
+          <div class="area-total"><span class="area-number">0</span> questões</div>
+        </div>
+      </div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <button class="details">Abrir detalhes <span>⌄</span></button>
+      <div class="details-content"></div>
+    </article>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
